@@ -863,3 +863,31 @@ def pd_to_sqlDB(input_df,
     con.commit()
     con.close()
 
+def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pd.DataFrame:
+    '''Execute an SQL query and return the results as a pandas dataframe
+
+    Args:
+        sql_query_string (str): SQL query string to execute
+        db_name (str, optional): Name of the SQLITE Database to execute the query in.
+                                 Defaults to 'default.db'.
+
+    Returns:
+        pd.DataFrame: Results of the SQL query in a pandas dataframe
+    '''    
+    import pandas as pd
+    import sqlite3
+    # Step 1: Connect to the SQL DB
+    con = sqlite3.connect(db_name)
+
+    # Step 2: Execute the SQL query
+    cursor = con.execute(sql_query_string)
+
+    # Step 3: Fetch the data and column names
+    result_data = cursor.fetchall()
+    cols = [description[0] for description in cursor.description]
+
+    # Step 4: Close the connection
+    con.close()
+
+    # Step 5: Return as a dataframe
+    return pd.DataFrame(result_data, columns=cols)
