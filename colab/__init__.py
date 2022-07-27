@@ -818,7 +818,7 @@ def augment_dataset(csvfilename, increaseby=3, seed=42):
     file.write(ds+ds_augmented)
 
 # ============ DB ===============
-def pd_to_sqlDB(input_df: pandas.DataFrame,
+def pd_to_sqlDB(input_df,
                 table_name: str,
                 db_name: str = 'default.db') -> None:
 
