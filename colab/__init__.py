@@ -816,3 +816,50 @@ def augment_dataset(csvfilename, increaseby=3, seed=42):
 
   with open(csvfilename,"w") as file:
     file.write(ds+ds_augmented)
+
+# ============ DB ===============
+def pd_to_sqlDB(input_df: pd.DataFrame,
+                table_name: str,
+                db_name: str = 'default.db') -> None:
+
+    '''Take a Pandas dataframe `input_df` and upload it to `table_name` SQLITE table
+
+    Args:
+        input_df (pd.DataFrame): Dataframe containing data to upload to SQLITE
+        table_name (str): Name of the SQLITE table to upload to
+        db_name (str, optional): Name of the SQLITE Database in which the table is created. 
+                                 Defaults to 'default.db'.
+    '''
+    import pandas as pd
+    import sqlite3
+    # Step 1: Setup local logging
+    import logging
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s: %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+
+    # Step 2: Find columns in the dataframe
+    cols = input_df.columns
+    cols_string = ','.join(cols)
+    val_wildcard_string = ','.join(['?'] * len(cols))
+
+    # Step 3: Connect to a DB file if it exists, else crete a new file
+    con = sqlite3.connect(db_name)
+    cur = con.cursor()
+    logging.info(f'SQL DB {db_name} created')
+
+    # Step 4: Create Table
+    sql_string = f"""CREATE TABLE {table_name} ({cols_string});"""
+    cur.execute(sql_string)
+    logging.info(f'SQL Table {table_name} created with {len(cols)} columns')
+
+    # Step 5: Upload the dataframe
+    rows_to_upload = input_df.to_dict(orient='split')['data']
+    sql_string = f"""INSERT INTO {table_name} ({cols_string}) VALUES ({val_wildcard_string});"""
+    cur.executemany(sql_string, rows_to_upload)
+    logging.info(f'{len(rows_to_upload)} rows uploaded to {table_name}')
+  
+    # Step 6: Commit the changes and close the connection
+    con.commit()
+    con.close()
+
