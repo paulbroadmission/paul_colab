@@ -867,7 +867,7 @@ def csv_to_create_table(csv_name:str,
     con.commit()
     con.close()
 
-def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pd.DataFrame:
+def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pandas.DataFrame:
     '''Execute an SQL query and return the results as a pandas dataframe
 
     Args:
