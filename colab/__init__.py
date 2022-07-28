@@ -36,6 +36,8 @@ from os import mkdir
 
 from google.colab.output import eval_js
 from PIL import Image, ImageDraw, ImageOps, ImageEnhance
+import pandas
+import pandas as pd
 import numpy as np
 from scipy.io.wavfile import read as wav_read
 import ffmpeg
