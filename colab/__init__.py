@@ -830,11 +830,11 @@ def csv_to_create_table(csv_name:str,
         db_name (str, optional): Name of the SQLITE Database in which the table is created. 
                                  Defaults to 'default.db'.
     '''
-    import pandas as pd
+    import pandas
     import sqlite3
 
     # Step 0: Read CSV to pd dataframe
-    input_df = pd.read_csv(csv_name)
+    input_df = pandas.read_csv(csv_name)
 
     # Step 1: Setup local logging
     import logging
@@ -878,7 +878,7 @@ def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pd.Dat
     Returns:
         pd.DataFrame: Results of the SQL query in a pandas dataframe
     '''    
-    import pandas as pd
+    import pandas
     import sqlite3
     # Step 1: Connect to the SQL DB
     con = sqlite3.connect(db_name)
@@ -894,4 +894,4 @@ def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pd.Dat
     con.close()
 
     # Step 5: Return as a dataframe
-    return pd.DataFrame(result_data, columns=cols)
+    return pandas.DataFrame(result_data, columns=cols)
