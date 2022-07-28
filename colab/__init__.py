@@ -818,7 +818,7 @@ def augment_dataset(csvfilename, increaseby=3, seed=42):
     file.write(ds+ds_augmented)
 
 # ============ DB ===============
-def pd_to_sqlDB(input_df,
+def csv_to_create_table(csv_name:str,
                 table_name: str,
                 db_name: str = 'default.db') -> None:
 
@@ -832,6 +832,10 @@ def pd_to_sqlDB(input_df,
     '''
     import pandas as pd
     import sqlite3
+
+    # Step 0: Read CSV to pd dataframe
+    input_df = pd.read_csv(csv_name)
+
     # Step 1: Setup local logging
     import logging
     logging.basicConfig(level=logging.INFO,
