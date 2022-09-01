@@ -41,6 +41,7 @@ import pandas as pd
 import numpy as np
 from scipy.io.wavfile import read as wav_read
 import ffmpeg
+import pickle
 
 
 def webcam2numpy(quality=0.8, size=(800,600)):
@@ -897,3 +898,10 @@ def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pandas
 
     # Step 5: Return as a dataframe
     return pandas.DataFrame(result_data, columns=cols)
+
+def zpickle_load(zpfilename):
+  import mgzip, pickle
+  data2=None
+  with mgzip.open(zpfilename, 'rb') as f:
+      data2 = pickle.load(f)
+  return data2
