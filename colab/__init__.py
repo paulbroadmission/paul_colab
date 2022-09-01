@@ -899,7 +899,10 @@ def sql_query_to_pd(sql_query_string: str, db_name: str ='default.db') -> pandas
     # Step 5: Return as a dataframe
     return pandas.DataFrame(result_data, columns=cols)
 
-def zpickle_load(zpfilename):
+def zpload(zpfilename):
+  """
+  do mgzip pip install in outside!! 
+  """
   import mgzip, pickle
   data2=None
   with mgzip.open(zpfilename, 'rb') as f:
