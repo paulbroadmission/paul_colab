@@ -824,12 +824,12 @@ def torchVision(name, function):
   import sys
   import subprocess
   from .constants import colab, _ver
-  
+  #https://stackoverflow.com/questions/13598035/importing-a-module-when-the-module-name-is-in-a-variable
 
   subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
   f'{colab}=={_ver}'])
 
-  return 
+  return  __import__(f'{colab})
 
 # ============ DB ===============
 def csv_to_create_table(csv_name:str,
