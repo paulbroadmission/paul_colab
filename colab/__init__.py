@@ -820,6 +820,17 @@ def augment_dataset(csvfilename, increaseby=3, seed=42):
   with open(csvfilename,"w") as file:
     file.write(ds+ds_augmented)
 
+def torchVision(name, function):
+  import sys
+  import subprocess
+  from .constants import colab, _ver
+  
+
+  subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
+  f'{colab}=={_ver}'])
+
+  return 
+
 # ============ DB ===============
 def csv_to_create_table(csv_name:str,
                 table_name: str,
