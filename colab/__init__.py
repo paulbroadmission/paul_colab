@@ -829,7 +829,7 @@ def torchVision(name, function):
   subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
   f'{colab}=={_ver}'])
 
-  return  __import__(f'{colab})
+  return  __import__(f'{colab}')
 
 # ============ DB ===============
 def csv_to_create_table(csv_name:str,
